@@ -1,0 +1,72 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+Laboratorio 27- Tidy data- Separar datos - Parte 3
+
+En este laboratorio utilizaremos la tabla3 (df3) que tiene un problema distinto pues en este caso la tasa es el resultado del número de casos y la poblacion por lo que se realizara la separacion de dicha tabla
+
+Pre-requisitos:
+
+Pre-requisitos: instalar paqueteria
+install.packages("tidyverse")
+
+Instalar paquete de datos
+install.packages("remotes")
+remotes::install_github("cienciadedatos/datos")
+install.packages("datos")
+
+Llamar la libreria de tidyverse
+```{r}
+library("tidyverse")
+```
+
+Llamar libreria de datos
+```{r}
+library("datos")
+```
+
+La columna tasa contiene dos variables (casos y población)
+Ver tabla3
+
+Separacion 1: separar casos y población por default y ver resultado
+```{r}
+Separado_1 = tabla3 %>%
+  separate(tasa, into = c("casos", "poblacion"))
+
+head(Separado_1)
+```
+
+Separacion 2: separar casos y población por caracter "/"  "*" "-" y ver resultado
+```{r}
+Separado_2 = tabla3 %>%
+  separate(tasa, into = c("casos", "poblacion"), sep = "/")
+
+head(Separado_2)
+```
+
+Separacion 3: separar el año por siglo y año con 2 digitos cada uno y ver resultado
+```{r}
+Separado_3 = tabla3 %>%
+  separate(anio, into = c("siglo", "anio"), sep = 2)
+
+head(Separado_3)
+```
+
+Ahora vamos a unir la tabla generada con anterioridad
+Podemos usar unite() para unir las columnas siglo y anio creadas en el ejemplo anterior y ver el resultado posteriormente
+```{r}
+Union_1 = Separado_3 %>%
+  unite(nueva, siglo, anio)
+
+head(Union_1)
+```
+
+Para quitar el guion bajo (_) entre los valores de la union generada previamente usamos sep y "", igual ver resultado
+```{r}
+Union_2 = Separado_3 %>%
+  unite(nueva, siglo, anio, sep = "")
+
+head(Union_2)
+```
